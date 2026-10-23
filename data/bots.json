@@ -1,0 +1,36 @@
+[
+  {
+    "id": "bot-1792116016293",
+    "name": "Bot EMA_CROSSOVER BTCUSDT",
+    "symbol": "BTCUSDT",
+    "strategy": "EMA_CROSSOVER",
+    "interval": "1h",
+    "allocatedUsd": 2000,
+    "status": "ACTIVE",
+    "position": {
+      "type": "LONG",
+      "entryPrice": 82087.69,
+      "amount": 0.024364189076340192,
+      "allocatedUsd": 2000,
+      "entryTime": "2026-10-16T02:00:40.638Z"
+    },
+    "totalPnl": 0,
+    "winCount": 0,
+    "lossCount": 0,
+    "createdAt": "2026-10-16T02:00:16.293Z"
+  },
+  {
+    "id": "bot-2",
+    "name": "Trend Follower Bot (NVDA)",
+    "symbol": "NVDA",
+    "strategy": "EMA_CROSSOVER",
+    "interval": "1d",
+    "allocatedUsd": 2000,
+    "status": "ACTIVE",
+    "position": null,
+    "totalPnl": 48.42,
+    "winCount": 2,
+    "lossCount": 1,
+    "createdAt": "2026-10-15T05:16:33.192Z"
+  }
+]

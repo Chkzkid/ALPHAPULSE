@@ -1,0 +1,41 @@
+[
+  {
+    "id": "alert-1",
+    "symbol": "BTCUSDT",
+    "name": "Bitcoin Breakout Alert",
+    "type": "PRICE_ABOVE",
+    "targetValue": 85000,
+    "interval": "1h",
+    "enabled": true,
+    "triggered": false,
+    "lastTriggeredAt": null,
+    "action": "notification",
+    "createdAt": "2026-10-15T05:16:33.190Z"
+  },
+  {
+    "id": "alert-2",
+    "symbol": "GC=F",
+    "name": "Oro RSI Sobreventa (<35)",
+    "type": "RSI_BELOW",
+    "targetValue": 35,
+    "interval": "1d",
+    "enabled": true,
+    "triggered": false,
+    "lastTriggeredAt": null,
+    "action": "notification",
+    "createdAt": "2026-10-15T05:16:33.192Z"
+  },
+  {
+    "id": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "type": "EMA_BULLISH_CROSS",
+    "targetValue": 0,
+    "interval": "1d",
+    "enabled": true,
+    "triggered": true,
+    "lastTriggeredAt": "2026-10-16T04:56:21.100Z",
+    "action": "notification",
+    "createdAt": "2026-10-15T05:16:33.192Z"
+  }
+]

@@ -1,0 +1,6 @@
+{
+  "webhookUrl": "",
+  "soundEnabled": true,
+  "refreshIntervalSec": 15,
+  "virtualBalanceUsd": 10000
+}

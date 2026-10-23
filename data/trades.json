@@ -1,0 +1,37 @@
+[
+  {
+    "id": "trade-1792116040638",
+    "botId": "bot-1792116016293",
+    "botName": "Bot EMA_CROSSOVER BTCUSDT",
+    "symbol": "BTCUSDT",
+    "action": "BUY",
+    "price": 82087.69,
+    "amount": 0.024364189076340192,
+    "reason": "EMA 9 cruzó por encima de EMA 21 ($82162.38 > $82015.15)",
+    "timestamp": "2026-10-16T02:00:40.638Z"
+  },
+  {
+    "id": "trade-1792114981836",
+    "botId": "bot-2",
+    "botName": "Trend Follower Bot (NVDA)",
+    "symbol": "NVDA",
+    "action": "SELL",
+    "price": 217.23,
+    "amount": 9.03750564844103,
+    "pnlUsd": -36.78,
+    "pnlPct": -1.84,
+    "reason": "EMA 9 cruzó por debajo de EMA 21 ($226.3 < $226.67)",
+    "timestamp": "2026-10-16T01:43:01.836Z"
+  },
+  {
+    "id": "trade-1792041401390",
+    "botId": "bot-2",
+    "botName": "Trend Follower Bot (NVDA)",
+    "symbol": "NVDA",
+    "action": "BUY",
+    "price": 221.3,
+    "amount": 9.03750564844103,
+    "reason": "EMA 9 cruzó por encima de EMA 21 ($228.56 > $227.62)",
+    "timestamp": "2026-10-15T05:16:41.390Z"
+  }
+]

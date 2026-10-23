@@ -1,0 +1,452 @@
+[
+  {
+    "id": "hist-1792126581100-258",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T04:56:21.100Z"
+  },
+  {
+    "id": "hist-1792126401003-936",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T04:53:21.003Z"
+  },
+  {
+    "id": "hist-1792126220958-429",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T04:50:20.958Z"
+  },
+  {
+    "id": "hist-1792126021149-808",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T04:47:01.149Z"
+  },
+  {
+    "id": "hist-1792125181241-387",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T04:33:01.241Z"
+  },
+  {
+    "id": "hist-1792125000966-63",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T04:30:00.966Z"
+  },
+  {
+    "id": "hist-1792124801016-497",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T04:26:41.016Z"
+  },
+  {
+    "id": "hist-1792124602211-138",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T04:23:22.211Z"
+  },
+  {
+    "id": "hist-1792123460414-503",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T04:04:20.414Z"
+  },
+  {
+    "id": "hist-1792123280414-674",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T04:01:20.414Z"
+  },
+  {
+    "id": "hist-1792123080530-884",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T03:58:00.530Z"
+  },
+  {
+    "id": "hist-1792122880700-434",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T03:54:40.700Z"
+  },
+  {
+    "id": "hist-1792122680497-9",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T03:51:20.497Z"
+  },
+  {
+    "id": "hist-1792122500362-897",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T03:48:20.362Z"
+  },
+  {
+    "id": "hist-1792122300382-747",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T03:45:00.382Z"
+  },
+  {
+    "id": "hist-1792122120367-435",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T03:42:00.367Z"
+  },
+  {
+    "id": "hist-1792121921569-918",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T03:38:41.569Z"
+  },
+  {
+    "id": "hist-1792121740731-765",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T03:35:40.731Z"
+  },
+  {
+    "id": "hist-1792121560705-379",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T03:32:40.705Z"
+  },
+  {
+    "id": "hist-1792121370126-907",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T03:29:30.127Z"
+  },
+  {
+    "id": "hist-1792121370070-237",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T03:29:30.070Z"
+  },
+  {
+    "id": "hist-1792118961301-605",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T02:49:21.301Z"
+  },
+  {
+    "id": "hist-1792118760958-520",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T02:46:00.958Z"
+  },
+  {
+    "id": "hist-1792118580718-233",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T02:43:00.718Z"
+  },
+  {
+    "id": "hist-1792118400701-991",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T02:40:00.701Z"
+  },
+  {
+    "id": "hist-1792118220699-765",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T02:37:00.699Z"
+  },
+  {
+    "id": "hist-1792118040547-127",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T02:34:00.547Z"
+  },
+  {
+    "id": "hist-1792117840768-322",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T02:30:40.768Z"
+  },
+  {
+    "id": "hist-1792117660698-976",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T02:27:40.698Z"
+  },
+  {
+    "id": "hist-1792117460420-908",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T02:24:20.420Z"
+  },
+  {
+    "id": "hist-1792117260556-284",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T02:21:00.556Z"
+  },
+  {
+    "id": "hist-1792117061166-53",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T02:17:41.166Z"
+  },
+  {
+    "id": "hist-1792116860911-760",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T02:14:20.911Z"
+  },
+  {
+    "id": "hist-1792116680349-812",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T02:11:20.349Z"
+  },
+  {
+    "id": "hist-1792116500297-877",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T02:08:20.297Z"
+  },
+  {
+    "id": "hist-1792116300418-469",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T02:05:00.418Z"
+  },
+  {
+    "id": "hist-1792116120310-859",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T02:02:00.310Z"
+  },
+  {
+    "id": "hist-1792115940275-959",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T01:59:00.275Z"
+  },
+  {
+    "id": "hist-1792115741113-364",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T01:55:41.113Z"
+  },
+  {
+    "id": "hist-1792115560976-812",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T01:52:40.976Z"
+  },
+  {
+    "id": "hist-1792115380966-574",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T01:49:40.966Z"
+  },
+  {
+    "id": "hist-1792115181190-407",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T01:46:21.190Z"
+  },
+  {
+    "id": "hist-1792114982207-911",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (339.37) cruzó por encima de EMA 21 (335.83) [Cruce Alcista]",
+    "price": 342,
+    "timestamp": "2026-10-16T01:43:02.207Z"
+  },
+  {
+    "id": "hist-1792042340393-169",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (338.71) cruzó por encima de EMA 21 (335.21) [Cruce Alcista]",
+    "price": 342.96,
+    "timestamp": "2026-10-15T05:32:20.393Z"
+  },
+  {
+    "id": "hist-1792042160393-920",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (338.71) cruzó por encima de EMA 21 (335.21) [Cruce Alcista]",
+    "price": 342.96,
+    "timestamp": "2026-10-15T05:29:20.393Z"
+  },
+  {
+    "id": "hist-test-1792042070412",
+    "alertId": "test",
+    "symbol": "BTCUSDT",
+    "name": "Alerta de Prueba del Sistema",
+    "message": "Esta es una señal de prueba emitida por el motor de automatización.",
+    "price": 85200,
+    "timestamp": "2026-10-15T05:27:50.412Z"
+  },
+  {
+    "id": "hist-1792041961503-28",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (338.71) cruzó por encima de EMA 21 (335.21) [Cruce Alcista]",
+    "price": 342.96,
+    "timestamp": "2026-10-15T05:26:01.503Z"
+  },
+  {
+    "id": "hist-1792041781001-484",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (338.71) cruzó por encima de EMA 21 (335.21) [Cruce Alcista]",
+    "price": 342.96,
+    "timestamp": "2026-10-15T05:23:01.001Z"
+  },
+  {
+    "id": "hist-1792041600841-35",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (338.71) cruzó por encima de EMA 21 (335.21) [Cruce Alcista]",
+    "price": 342.96,
+    "timestamp": "2026-10-15T05:20:00.841Z"
+  },
+  {
+    "id": "hist-1792041401691-182",
+    "alertId": "alert-3",
+    "symbol": "AAPL",
+    "name": "Apple Cruce Alcista EMA (9 cruza 21)",
+    "message": "EMA 9 (338.71) cruzó por encima de EMA 21 (335.21) [Cruce Alcista]",
+    "price": 342.96,
+    "timestamp": "2026-10-15T05:16:41.691Z"
+  }
+]
