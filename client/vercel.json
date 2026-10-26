@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:match*",
+      "destination": "https://alphapulse-bhst.onrender.com/api/:match*"
+    },
+    {
+      "source": "/ws",
+      "destination": "https://alphapulse-bhst.onrender.com/ws"
+    }
+  ]
+}
