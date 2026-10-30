@@ -46,7 +46,7 @@ const PRESET_ASSETS = [
   { symbol: 'DX-Y.NYB', yahooSymbol: 'DX-Y.NYB', name: 'US Dollar Index (DXY)', type: 'index', category: 'Indices', baseCurrency: 'USD' }
 ];
 
-// In-memory quote cache (5-10s TTL)
+// In-memory quote cache (Aumentado a 15-20s TTL para evitar rate limits)
 const cache = new Map();
 function getCache(key) {
   const item = cache.get(key);
@@ -55,8 +55,26 @@ function getCache(key) {
   }
   return null;
 }
-function setCache(key, data, ttlMs = 8000) {
+function setCache(key, data, ttlMs = 15000) {
   cache.set(key, { data, timestamp: Date.now(), ttl: ttlMs });
+}
+
+// Función robusta con reintentos para Yahoo Finance (evita bloqueos 429)
+async function yahooWithRetry(fn, retries = 3, delay = 2000) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      return await fn();
+    } catch (err) {
+      const status = err.status || err.response?.status;
+      if ((status === 429 || !status) && i < retries - 1) {
+        console.warn(`[MarketData] Yahoo Finance rate limit o error (Intento ${i + 1}/${retries}). Reintentando en ${delay / 1000}s...`);
+        await new Promise(res => setTimeout(res, delay));
+        delay *= 2;
+      } else if (i === retries - 1) {
+        throw err;
+      }
+    }
+  }
 }
 
 function isCryptoSymbol(sym) {
@@ -67,7 +85,7 @@ function isCryptoSymbol(sym) {
 }
 
 /**
- * Aggregate candle list by factor (e.g. 2 x 1m = 2m, 2 x 1w = 2w, etc.)
+ * Aggregate candle list by factor
  */
 function aggregateCandles(candles, factor) {
   if (factor <= 1 || !candles || candles.length === 0) return candles;
@@ -87,8 +105,7 @@ function aggregateCandles(candles, factor) {
 }
 
 /**
- * Fetch candles from Binance API with support for all requested intervals:
- * 1m, 2m, 5m, 30m, 1h, 2h, 4h, 8h, 12h, 1d, 3d, 1w, 2w, 1mo, 3mo, 6mo, 1y
+ * Fetch candles from Binance API
  */
 async function fetchBinanceKlines(symbol, interval = '1d', limit = 250) {
   let binanceSymbol = symbol.toUpperCase();
@@ -144,7 +161,7 @@ async function fetchBinanceKlines(symbol, interval = '1d', limit = 250) {
 }
 
 /**
- * Fetch candles from Yahoo Finance with support for all intervals
+ * Fetch candles from Yahoo Finance with retry support
  */
 async function fetchYahooChart(symbol, interval = '1d') {
   let yfInterval = '1d';
@@ -213,13 +230,12 @@ async function fetchYahooChart(symbol, interval = '1d') {
   }
 
   const period1 = new Date(Date.now() - rangeDays * 24 * 3600 * 1000);
-
   const queryOptions = {
     period1: period1.toISOString().split('T')[0],
     interval: yfInterval
   };
 
-  const chart = await yahooFinance.chart(symbol, queryOptions);
+  const chart = await yahooWithRetry(() => yahooFinance.chart(symbol, queryOptions));
   if (!chart || !chart.quotes) return [];
 
   const rawCandles = chart.quotes
@@ -240,7 +256,7 @@ async function fetchYahooChart(symbol, interval = '1d') {
 }
 
 /**
- * Get Kline / Candles for any asset (Cryptos, Stocks, Commodities)
+ * Get Kline / Candles for any asset
  */
 async function getCandles(symbol, interval = '1d', limit = 250) {
   const cleanSymbol = symbol.trim().toUpperCase();
@@ -249,7 +265,6 @@ async function getCandles(symbol, interval = '1d', limit = 250) {
   if (cached) return cached;
 
   let candles = [];
-
   if (isCryptoSymbol(cleanSymbol)) {
     try {
       candles = await fetchBinanceKlines(cleanSymbol, interval, limit);
@@ -263,13 +278,13 @@ async function getCandles(symbol, interval = '1d', limit = 250) {
   }
 
   if (candles.length > 0) {
-    setCache(cacheKey, candles, 10000); // 10s cache
+    setCache(cacheKey, candles, 20000);
   }
   return candles;
 }
 
 /**
- * Get live quote and 24h stats for any symbol
+ * Get live quote and 24h stats with robust error handling
  */
 async function getQuote(symbol) {
   const cleanSymbol = symbol.trim().toUpperCase();
@@ -302,25 +317,29 @@ async function getQuote(symbol) {
         timestamp: Date.now()
       };
     } catch (err) {
-      const asset = PRESET_ASSETS.find(a => a.symbol === cleanSymbol);
-      const yfSymbol = asset?.yahooSymbol || `${cleanSymbol.replace('USDT', '')}-USD`;
-      const q = await yahooFinance.quote(yfSymbol);
-      result = {
-        symbol: cleanSymbol,
-        name: q.shortName || cleanSymbol,
-        type: 'crypto',
-        price: q.regularMarketPrice || 0,
-        change: q.regularMarketChange || 0,
-        changePercent: q.regularMarketChangePercent || 0,
-        high24h: q.regularMarketDayHigh || 0,
-        low24h: q.regularMarketDayLow || 0,
-        volume: q.regularMarketVolume || 0,
-        timestamp: Date.now()
-      };
+      try {
+        const asset = PRESET_ASSETS.find(a => a.symbol === cleanSymbol);
+        const yfSymbol = asset?.yahooSymbol || `${cleanSymbol.replace('USDT', '')}-USD`;
+        const q = await yahooWithRetry(() => yahooFinance.quote(yfSymbol));
+        result = {
+          symbol: cleanSymbol,
+          name: q.shortName || cleanSymbol,
+          type: 'crypto',
+          price: q.regularMarketPrice || 0,
+          change: q.regularMarketChange || 0,
+          changePercent: q.regularMarketChangePercent || 0,
+          high24h: q.regularMarketDayHigh || 0,
+          low24h: q.regularMarketDayLow || 0,
+          volume: q.regularMarketVolume || 0,
+          timestamp: Date.now()
+        };
+      } catch (yfErr) {
+        result = { symbol: cleanSymbol, name: cleanSymbol, price: 0, change: 0, changePercent: 0, error: yfErr.message };
+      }
     }
   } else {
     try {
-      const q = await yahooFinance.quote(cleanSymbol);
+      const q = await yahooWithRetry(() => yahooFinance.quote(cleanSymbol));
       const asset = PRESET_ASSETS.find(a => a.symbol === cleanSymbol);
       result = {
         symbol: cleanSymbol,
@@ -336,25 +355,18 @@ async function getQuote(symbol) {
         timestamp: Date.now()
       };
     } catch (err) {
-      result = {
-        symbol: cleanSymbol,
-        name: cleanSymbol,
-        price: 0,
-        change: 0,
-        changePercent: 0,
-        error: err.message
-      };
+      result = { symbol: cleanSymbol, name: cleanSymbol, price: 0, change: 0, changePercent: 0, error: err.message };
     }
   }
 
   if (result && result.price > 0) {
-    setCache(cacheKey, result, 5000);
+    setCache(cacheKey, result, 10000);
   }
   return result;
 }
 
 /**
- * Get Real-Time Order Book (Libro de Órdenes) & Market Depth
+ * Get Real-Time Order Book & Market Depth
  */
 async function getOrderBook(symbol) {
   const cleanSymbol = symbol.trim().toUpperCase();
@@ -391,7 +403,6 @@ async function getOrderBook(symbol) {
       const topAsk = asks[0]?.price || 0;
       const spread = Number((topAsk - topBid).toFixed(4));
       const spreadPct = topBid > 0 ? Number(((spread / topBid) * 100).toFixed(3)) : 0;
-
       const totalDepth = totalBidVolume + totalAskVolume;
       const buyPressurePct = totalDepth > 0 ? Number(((totalBidVolume / totalDepth) * 100).toFixed(1)) : 50;
       const sellPressurePct = Number((100 - buyPressurePct).toFixed(1));
@@ -411,11 +422,10 @@ async function getOrderBook(symbol) {
         timestamp: Date.now()
       };
     } catch (err) {
-      console.warn(`Binance orderbook failed for ${cleanSymbol}:`, err.message);
+      // Fallback
     }
   }
 
-  // Fallback / Equities / Commodities Depth Generator based on live price
   const quote = await getQuote(cleanSymbol);
   const basePrice = quote?.price || 100;
   const spread = basePrice * 0.0003;
@@ -460,7 +470,7 @@ async function getOrderBook(symbol) {
 }
 
 /**
- * Get Market Heatmap data across multiple timeframes (1m, 5m, 1h, 1d, 1w, 1mo)
+ * Get Market Heatmap data
  */
 async function getHeatmapData(timeframe = '1d') {
   const cacheKey = `heatmap_${timeframe}`;
@@ -468,13 +478,11 @@ async function getHeatmapData(timeframe = '1d') {
   if (cached) return cached;
 
   const heatmapList = [];
-
   for (const asset of PRESET_ASSETS) {
     try {
       const quote = await getQuote(asset.symbol);
       let change = quote?.changePercent || 0;
 
-      // If timeframe is not 1d, compute change relative to that timeframe's first candle
       if (timeframe !== '1d') {
         const candles = await getCandles(asset.symbol, timeframe, 15);
         if (candles.length >= 2) {
@@ -496,20 +504,20 @@ async function getHeatmapData(timeframe = '1d') {
         high24h: quote?.high24h || 0,
         low24h: quote?.low24h || 0
       });
+      // Pausa corta entre activos para no saturar
+      await new Promise(res => setTimeout(res, 100));
     } catch (e) {
       // Continue
     }
   }
 
-  // Sort by volume / market presence
   heatmapList.sort((a, b) => (b.quoteVolume || b.volume) - (a.quoteVolume || a.volume));
-
-  setCache(cacheKey, heatmapList, 15000); // 15s cache
+  setCache(cacheKey, heatmapList, 30000);
   return heatmapList;
 }
 
 /**
- * Search symbols across assets
+ * Search symbols
  */
 async function searchSymbols(query) {
   if (!query || query.trim().length === 0) return PRESET_ASSETS;
@@ -523,7 +531,7 @@ async function searchSymbols(query) {
 
   let remoteMatches = [];
   try {
-    const searchRes = await yahooFinance.search(query);
+    const searchRes = await yahooWithRetry(() => yahooFinance.search(query));
     if (searchRes && searchRes.quotes) {
       remoteMatches = searchRes.quotes
         .filter(item => item.symbol && (item.quoteType === 'EQUITY' || item.quoteType === 'COMMODITY' || item.quoteType === 'CRYPTOCURRENCY' || item.quoteType === 'INDEX' || item.quoteType === 'CURRENCY'))
