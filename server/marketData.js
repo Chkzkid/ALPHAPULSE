@@ -46,7 +46,7 @@ const PRESET_ASSETS = [
   { symbol: 'DX-Y.NYB', yahooSymbol: 'DX-Y.NYB', name: 'US Dollar Index (DXY)', type: 'index', category: 'Indices', baseCurrency: 'USD' }
 ];
 
-// In-memory quote cache (Aumentado a 15-20s TTL para evitar rate limits)
+// In-memory quote cache (TTL de 60s para proteger la API)
 const cache = new Map();
 function getCache(key) {
   const item = cache.get(key);
@@ -55,21 +55,21 @@ function getCache(key) {
   }
   return null;
 }
-function setCache(key, data, ttlMs = 15000) {
+function setCache(key, data, ttlMs = 60000) {
   cache.set(key, { data, timestamp: Date.now(), ttl: ttlMs });
 }
 
-// Función robusta con reintentos para Yahoo Finance (evita bloqueos 429)
-async function yahooWithRetry(fn, retries = 3, delay = 2000) {
+// Función robusta con reintentos y pausas largas (Backoff exponencial)
+async function yahooWithRetry(fn, retries = 3, delay = 3000) {
   for (let i = 0; i < retries; i++) {
     try {
       return await fn();
     } catch (err) {
       const status = err.status || err.response?.status;
       if ((status === 429 || !status) && i < retries - 1) {
-        console.warn(`[MarketData] Yahoo Finance rate limit o error (Intento ${i + 1}/${retries}). Reintentando en ${delay / 1000}s...`);
+        console.warn(`[MarketData] Yahoo Finance rate limit (Intento ${i + 1}/${retries}). Esperando ${delay / 1000}s...`);
         await new Promise(res => setTimeout(res, delay));
-        delay *= 2;
+        delay *= 2; // Duplicar espera en cada reintento
       } else if (i === retries - 1) {
         throw err;
       }
@@ -84,9 +84,6 @@ function isCryptoSymbol(sym) {
   return match?.type === 'crypto';
 }
 
-/**
- * Aggregate candle list by factor
- */
 function aggregateCandles(candles, factor) {
   if (factor <= 1 || !candles || candles.length === 0) return candles;
   const aggregated = [];
@@ -104,9 +101,6 @@ function aggregateCandles(candles, factor) {
   return aggregated;
 }
 
-/**
- * Fetch candles from Binance API
- */
 async function fetchBinanceKlines(symbol, interval = '1d', limit = 250) {
   let binanceSymbol = symbol.toUpperCase();
   if (!binanceSymbol.endsWith('USDT') && !binanceSymbol.endsWith('BUSD')) {
@@ -116,29 +110,15 @@ async function fetchBinanceKlines(symbol, interval = '1d', limit = 250) {
   let baseInterval = interval;
   let aggFactor = 1;
 
-  if (interval === '2m') {
-    baseInterval = '1m';
-    aggFactor = 2;
-  } else if (interval === '2w') {
-    baseInterval = '1w';
-    aggFactor = 2;
-  } else if (interval === '1mo' || interval === '1M') {
-    baseInterval = '1M';
-  } else if (interval === '3mo') {
-    baseInterval = '1M';
-    aggFactor = 3;
-  } else if (interval === '6mo') {
-    baseInterval = '1M';
-    aggFactor = 6;
-  } else if (interval === '1y') {
-    baseInterval = '1M';
-    aggFactor = 12;
-  }
+  if (interval === '2m') { baseInterval = '1m'; aggFactor = 2; }
+  else if (interval === '2w') { baseInterval = '1w'; aggFactor = 2; }
+  else if (interval === '1mo' || interval === '1M') { baseInterval = '1M'; }
+  else if (interval === '3mo') { baseInterval = '1M'; aggFactor = 3; }
+  else if (interval === '6mo') { baseInterval = '1M'; aggFactor = 6; }
+  else if (interval === '1y') { baseInterval = '1M'; aggFactor = 12; }
 
   const validBinanceIntervals = ['1m', '3m', '5m', '15m', '30m', '1h', '2h', '4h', '6h', '8h', '12h', '1d', '3d', '1w', '1M'];
-  if (!validBinanceIntervals.includes(baseInterval)) {
-    baseInterval = '1d';
-  }
+  if (!validBinanceIntervals.includes(baseInterval)) baseInterval = '1d';
 
   const fetchLimit = Math.min(1000, limit * aggFactor);
   const url = `https://api.binance.com/api/v3/klines?symbol=${binanceSymbol}&interval=${baseInterval}&limit=${fetchLimit}`;
@@ -154,86 +134,34 @@ async function fetchBinanceKlines(symbol, interval = '1d', limit = 250) {
     quoteVolume: parseFloat(k[7])
   }));
 
-  if (aggFactor > 1) {
-    return aggregateCandles(rawCandles, aggFactor);
-  }
-  return rawCandles;
+  return aggFactor > 1 ? aggregateCandles(rawCandles, aggFactor) : rawCandles;
 }
 
-/**
- * Fetch candles from Yahoo Finance with retry support
- */
 async function fetchYahooChart(symbol, interval = '1d') {
   let yfInterval = '1d';
   let aggFactor = 1;
   let rangeDays = 365;
 
-  if (interval === '1m') {
-    yfInterval = '1m';
-    rangeDays = 7;
-  } else if (interval === '2m') {
-    yfInterval = '2m';
-    rangeDays = 25;
-  } else if (interval === '5m') {
-    yfInterval = '5m';
-    rangeDays = 40;
-  } else if (interval === '30m') {
-    yfInterval = '30m';
-    rangeDays = 60;
-  } else if (interval === '1h') {
-    yfInterval = '60m';
-    rangeDays = 120;
-  } else if (interval === '2h') {
-    yfInterval = '60m';
-    aggFactor = 2;
-    rangeDays = 180;
-  } else if (interval === '4h') {
-    yfInterval = '60m';
-    aggFactor = 4;
-    rangeDays = 300;
-  } else if (interval === '8h') {
-    yfInterval = '60m';
-    aggFactor = 8;
-    rangeDays = 365;
-  } else if (interval === '12h') {
-    yfInterval = '60m';
-    aggFactor = 12;
-    rangeDays = 400;
-  } else if (interval === '1d') {
-    yfInterval = '1d';
-    rangeDays = 365 * 2;
-  } else if (interval === '3d') {
-    yfInterval = '1d';
-    aggFactor = 3;
-    rangeDays = 365 * 3;
-  } else if (interval === '1w' || interval === '1wk') {
-    yfInterval = '1wk';
-    rangeDays = 365 * 5;
-  } else if (interval === '2w') {
-    yfInterval = '1wk';
-    aggFactor = 2;
-    rangeDays = 365 * 6;
-  } else if (interval === '1mo' || interval === '1M') {
-    yfInterval = '1mo';
-    rangeDays = 365 * 10;
-  } else if (interval === '3mo') {
-    yfInterval = '3mo';
-    rangeDays = 365 * 15;
-  } else if (interval === '6mo') {
-    yfInterval = '3mo';
-    aggFactor = 2;
-    rangeDays = 365 * 20;
-  } else if (interval === '1y') {
-    yfInterval = '3mo';
-    aggFactor = 4;
-    rangeDays = 365 * 25;
-  }
+  if (interval === '1m') { yfInterval = '1m'; rangeDays = 7; }
+  else if (interval === '2m') { yfInterval = '2m'; rangeDays = 25; }
+  else if (interval === '5m') { yfInterval = '5m'; rangeDays = 40; }
+  else if (interval === '30m') { yfInterval = '30m'; rangeDays = 60; }
+  else if (interval === '1h') { yfInterval = '60m'; rangeDays = 120; }
+  else if (interval === '2h') { yfInterval = '60m'; aggFactor = 2; rangeDays = 180; }
+  else if (interval === '4h') { yfInterval = '60m'; aggFactor = 4; rangeDays = 300; }
+  else if (interval === '8h') { yfInterval = '60m'; aggFactor = 8; rangeDays = 365; }
+  else if (interval === '12h') { yfInterval = '60m'; aggFactor = 12; rangeDays = 400; }
+  else if (interval === '1d') { yfInterval = '1d'; rangeDays = 365 * 2; }
+  else if (interval === '3d') { yfInterval = '1d'; aggFactor = 3; rangeDays = 365 * 3; }
+  else if (interval === '1w' || interval === '1wk') { yfInterval = '1wk'; rangeDays = 365 * 5; }
+  else if (interval === '2w') { yfInterval = '1wk'; aggFactor = 2; rangeDays = 365 * 6; }
+  else if (interval === '1mo' || interval === '1M') { yfInterval = '1mo'; rangeDays = 365 * 10; }
+  else if (interval === '3mo') { yfInterval = '3mo'; rangeDays = 365 * 15; }
+  else if (interval === '6mo') { yfInterval = '3mo'; aggFactor = 2; rangeDays = 365 * 20; }
+  else if (interval === '1y') { yfInterval = '3mo'; aggFactor = 4; rangeDays = 365 * 25; }
 
   const period1 = new Date(Date.now() - rangeDays * 24 * 3600 * 1000);
-  const queryOptions = {
-    period1: period1.toISOString().split('T')[0],
-    interval: yfInterval
-  };
+  const queryOptions = { period1: period1.toISOString().split('T')[0], interval: yfInterval };
 
   const chart = await yahooWithRetry(() => yahooFinance.chart(symbol, queryOptions));
   if (!chart || !chart.quotes) return [];
@@ -249,15 +177,9 @@ async function fetchYahooChart(symbol, interval = '1d') {
       volume: Number(q.volume || 0)
     }));
 
-  if (aggFactor > 1) {
-    return aggregateCandles(rawCandles, aggFactor);
-  }
-  return rawCandles;
+  return aggFactor > 1 ? aggregateCandles(rawCandles, aggFactor) : rawCandles;
 }
 
-/**
- * Get Kline / Candles for any asset
- */
 async function getCandles(symbol, interval = '1d', limit = 250) {
   const cleanSymbol = symbol.trim().toUpperCase();
   const cacheKey = `candles_${cleanSymbol}_${interval}_${limit}`;
@@ -277,15 +199,10 @@ async function getCandles(symbol, interval = '1d', limit = 250) {
     candles = await fetchYahooChart(cleanSymbol, interval);
   }
 
-  if (candles.length > 0) {
-    setCache(cacheKey, candles, 20000);
-  }
+  if (candles.length > 0) setCache(cacheKey, candles, 60000);
   return candles;
 }
 
-/**
- * Get live quote and 24h stats with robust error handling
- */
 async function getQuote(symbol) {
   const cleanSymbol = symbol.trim().toUpperCase();
   const cacheKey = `quote_${cleanSymbol}`;
@@ -360,14 +277,11 @@ async function getQuote(symbol) {
   }
 
   if (result && result.price > 0) {
-    setCache(cacheKey, result, 10000);
+    setCache(cacheKey, result, 30000);
   }
   return result;
 }
 
-/**
- * Get Real-Time Order Book & Market Depth
- */
 async function getOrderBook(symbol) {
   const cleanSymbol = symbol.trim().toUpperCase();
 
@@ -421,9 +335,7 @@ async function getOrderBook(symbol) {
         sellPressurePct,
         timestamp: Date.now()
       };
-    } catch (err) {
-      // Fallback
-    }
+    } catch (err) {}
   }
 
   const quote = await getQuote(cleanSymbol);
@@ -469,9 +381,6 @@ async function getOrderBook(symbol) {
   };
 }
 
-/**
- * Get Market Heatmap data
- */
 async function getHeatmapData(timeframe = '1d') {
   const cacheKey = `heatmap_${timeframe}`;
   const cached = getCache(cacheKey);
@@ -504,21 +413,17 @@ async function getHeatmapData(timeframe = '1d') {
         high24h: quote?.high24h || 0,
         low24h: quote?.low24h || 0
       });
-      // Pausa corta entre activos para no saturar
-      await new Promise(res => setTimeout(res, 100));
-    } catch (e) {
-      // Continue
-    }
+      
+      // Pausa ampliada a 600ms para evitar saturar a Yahoo Finance
+      await new Promise(res => setTimeout(res, 600));
+    } catch (e) {}
   }
 
   heatmapList.sort((a, b) => (b.quoteVolume || b.volume) - (a.quoteVolume || a.volume));
-  setCache(cacheKey, heatmapList, 30000);
+  setCache(cacheKey, heatmapList, 60000);
   return heatmapList;
 }
 
-/**
- * Search symbols
- */
 async function searchSymbols(query) {
   if (!query || query.trim().length === 0) return PRESET_ASSETS;
   const q = query.trim().toLowerCase();
@@ -544,9 +449,7 @@ async function searchSymbols(query) {
           exchange: item.exchDisp
         }));
     }
-  } catch (err) {
-    // Ignore search failure
-  }
+  } catch (err) {}
 
   const combined = [...localMatches];
   for (const r of remoteMatches) {
